@@ -2,9 +2,14 @@ const supertest = require('supertest')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
+const Blog = require('../models/blog')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
+
+beforeAll(async () => {
+  await Blog.deleteMany({})
+})
 
 describe('when there is initially one user in db', () => {
   beforeEach(async () => {
@@ -102,6 +107,6 @@ describe('when there is initially one user in db', () => {
   })
 })
 
-afterAll(() => {
+afterAll(async () => {
   mongoose.connection.close()
 })
